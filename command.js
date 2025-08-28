@@ -1,6 +1,5 @@
 import { Command } from "commander";
 import fs from "fs"
-import { json } from "stream/consumers";
 
 const program = new Command();
 const dataPath = "task.json"
@@ -39,6 +38,24 @@ const deleteData = (id) => {
     }
 }
 
+const markInProgress = (id) => {
+    const getallData = readData()
+    const index = getallData.findIndex(item => item.id == id);
+    if (index !== -1) {
+        getallData[index].status = "in-progress";
+        addData(getallData);
+    }
+}
+
+const markDone = (id) => {
+    const getallData = readData()
+    const index = getallData.findIndex(item => item.id == id);
+    if (index !== -1) {
+        getallData[index].status = "done";
+        addData(getallData);
+    }
+}
+
 program
     .command("add")
     .argument("<task>", "Your task")
@@ -53,15 +70,31 @@ program
             newId = lastData.id + 1
         }
 
-        data.push({ id: newId, task, done: false })
+        data.push({ id: newId, task, status: "todo" })
         addData(data)
     });
 
 program
-    .command("list")
-    .action(() => {
+    .command("list [status]")
+    .action((status) => {
         const data = readData()
-        console.log(data)
+        if (!status) {
+            console.log(data)
+        } else {
+            const filtered = data.filter(
+                (task) => (task.status || "todo") === status.toLowerCase()
+            );
+
+            if (filtered.length === 0) {
+                console.log(`Tidak ada task dengan status "${status}"`);
+                return;
+            }
+
+            filtered.forEach((task) => {
+                console.log(`[${task.id}] ${task.task} - ${task.status}`);
+            });
+        }
+
     });
 
 program
@@ -77,6 +110,20 @@ program
     .argument("<id>", "your id")
     .action((id) => {
         deleteData(id)
+    });
+
+program
+    .command("mark-in-progress")
+    .argument("<id>", "your id")
+    .action((id) => {
+        markInProgress(id)
+    });
+
+program
+    .command("mark-done")
+    .argument("<id>", "your id")
+    .action((id) => {
+        markDone(id)
     });
 
 program.parse();
