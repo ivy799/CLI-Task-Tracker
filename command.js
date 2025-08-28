@@ -23,7 +23,9 @@ const updateData = (id, newTask) => {
     const getallData = readData()
     const index = getallData.findIndex(item => item.id == id);
     if (index !== -1) {
-        getallData[index].task = newTask;
+        const now = new Date();
+        getallData[index].description = newTask;
+        getallData[index].updatedAt = now.toLocaleString();
         addData(getallData);
     }
 }
@@ -69,8 +71,8 @@ program
             const lastData = data[data.length - 1]
             newId = lastData.id + 1
         }
-
-        data.push({ id: newId, task, status: "todo" })
+        const now = new Date()
+        data.push({ id: newId, description: task, status: "todo", createdAt: now.toLocaleString(), updatedAt: now.toLocaleString() })
         addData(data)
     });
 
@@ -91,7 +93,7 @@ program
             }
 
             filtered.forEach((task) => {
-                console.log(`[${task.id}] ${task.task} - ${task.status}`);
+                console.log(`[${task.id}] ${task.description} - ${task.status}`);
             });
         }
 
