@@ -1,12 +1,1 @@
-[
-    {
-        "id": 0,
-        "task": "makan",
-        "done": false
-    },
-    {
-        "id": 1,
-        "task": "belajar",
-        "done": false
-    }
-]
+[{"id":0,"task":"makan","done":false},{"id":1,"task":"tes","done":false}]

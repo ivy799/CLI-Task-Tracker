@@ -20,6 +20,15 @@ const readData = () => {
     return JSON.parse(raw)
 }
 
+const updateData = (id, newTask) => {
+    const getallData = readData()
+    const index = getallData.findIndex(item => item.id == id);
+    if (index !== -1) {
+        getallData[index].task = newTask;
+        addData(getallData);
+    }
+}
+
 program
     .command("add")
     .argument("<task>", "Your task")
@@ -36,6 +45,21 @@ program
 
         data.push({ id: newId, task, done: false })
         addData(data)
+    });
+
+program
+    .command("list")
+    .action(() => {
+        const data = readData()
+        console.log(data)
+    });
+
+program
+    .command("update")
+    .argument("<id>", "your id")
+    .argument("<task>", "Your task")
+    .action((id, task) => {
+        updateData(id, task)
     });
 
 program.parse();
