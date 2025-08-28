@@ -29,6 +29,16 @@ const updateData = (id, newTask) => {
     }
 }
 
+const deleteData = (id) => {
+    const allData = readData()
+    const numericId = parseInt(id, 10);
+    const index = allData.findIndex(item => item.id == numericId);
+    if (index !== -1) {
+        allData.splice(index, 1)
+        addData(allData)
+    }
+}
+
 program
     .command("add")
     .argument("<task>", "Your task")
@@ -60,6 +70,13 @@ program
     .argument("<task>", "Your task")
     .action((id, task) => {
         updateData(id, task)
+    });
+
+program
+    .command("delete")
+    .argument("<id>", "your id")
+    .action((id) => {
+        deleteData(id)
     });
 
 program.parse();
