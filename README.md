@@ -68,3 +68,7 @@ node command.js <command> [options]
 Semua data tugas tersimpan di file `task.json`.
 
 ---
+
+## Project URL
+
+[https://github.com/ivy799/CLI-Task-Tracker](https://github.com/ivy799/CLI-Task-Tracker)
