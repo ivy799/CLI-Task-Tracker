@@ -71,4 +71,4 @@ Semua data tugas tersimpan di file `task.json`.
 
 ## Project URL
 
-[https://github.com/ivy799/CLI-Task-Tracker](https://github.com/ivy799/CLI-Task-Tracker)
+[https://roadmap.sh/projects/task-tracker](https://roadmap.sh/projects/task-tracker)
